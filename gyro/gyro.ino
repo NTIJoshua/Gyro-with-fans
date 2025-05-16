@@ -4,10 +4,10 @@
 MPU6050 mpu;
 
 // Motor pins (L293D)
-const int leftMotor1 = 5;
-const int leftMotor2 = 6;
-const int rightMotor1 = 10;
-const int rightMotor2 = 9;
+const int leftMotor1 = 10;
+const int leftMotor2 = 9;
+const int rightMotor1 = 5;
+const int rightMotor2 = 6;
 
 void setup() {
   Wire.begin();
@@ -30,13 +30,13 @@ void loop() {
   mpu.getAcceleration(&ax, &ay, &az);
   
   // Simple tilt detection
-  if (ay > 5000) { // Tilted left
+  if (ax > 2500) { // Tilted left
     digitalWrite(leftMotor1, HIGH);  // Left motor on
     digitalWrite(leftMotor2, LOW);
     digitalWrite(rightMotor1, LOW);
     digitalWrite(rightMotor2, LOW);
   } 
-  else if (ay < -5000) { // Tilted right
+  else if (ax < -2500) { // Tilted right
     digitalWrite(leftMotor1, LOW);
     digitalWrite(leftMotor2, LOW);
     digitalWrite(rightMotor1, HIGH); // Right motor on
@@ -49,5 +49,5 @@ void loop() {
     digitalWrite(rightMotor2, LOW);
   }
   
-  delay(100);
+  delay(80);
 }
